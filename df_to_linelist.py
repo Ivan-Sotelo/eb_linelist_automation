@@ -12,6 +12,11 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK, WD_LINE_SPACING
 from datetime import datetime
 from docx.dml.color import ColorFormat
 from docx.shared import RGBColor
+import sys
+
+linelist_csv = sys.argv[1]
+output_dir = sys.argv[2]
+
 
 def make_paragraph(document, font_name, font_size, alignment, text, bold):
     p = document.add_paragraph()
@@ -476,7 +481,7 @@ def set_cell_height(table):
 
 
 if __name__ == '__main__':
-    print('Generating Linelist...')
+    
     pd.options.mode.chained_assignment = None  # default='warn'
     # open a document
     document = Document("linelist.docx")
@@ -525,7 +530,7 @@ if __name__ == '__main__':
 
     populate_appendix_df()
 
-    document.add_page_break()
+    #document.add_page_break()
     make_paragraph(document, 'Calibri', 10, WD_ALIGN_PARAGRAPH.CENTER, 'APPENDIX: RUN SUMMARY', bold = True)
     add_line_break(document)
     make_paragraph(document, 'Calibri', 10, WD_ALIGN_PARAGRAPH.LEFT, 'Table 1. Summary of sample processing details and key points. ', bold = False)
@@ -602,7 +607,11 @@ if __name__ == '__main__':
     set_alignment_column(table2,'center',3)
 
     # save the doc
-    document.save('test.docx')
+    today = date.today().strftime("%m_%d_%Y")
+    filename = f'/Linelist_{today}.docx'
+    document.save(output_dir + filename)
+
+    print('Linelist Generated!')
 
 
 
