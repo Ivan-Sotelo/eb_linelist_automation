@@ -412,19 +412,26 @@ def generate_table2_dataframe(lineage_list,classification_list,province_data):
         temp_df['LINEAGE NOT ASSIGNED'] = 0
         temp_df['REGION-PROVINCE'] = row['province']
     
-        for i in classification_list:
+        for i in classification_list:                                               # tallys the no of samples for each classification
             for j in row['classification']:
                 if (j == i) or (i in j):
                     temp_df.at[criteria_dict[i], 'NO. OF SAMPLES'] += 1
 
-        for x in row['lineage']:
-            if (x == ''):
-                    classification_lineage_index = row['classification'][row['lineage'].index(x)]
+        # for x in row['lineage']:
+        #     if (x == ''):
+        #             classification_lineage_index = row['classification'][row['lineage'].index(x)]
                     
-                    temp_df.at[criteria_dict[classification_lineage_index], 'LINEAGE NOT ASSIGNED'] += 1
+        #             temp_df.at[criteria_dict[classification_lineage_index], 'LINEAGE NOT ASSIGNED'] += 1
 
         lineage_counter = 0
+        for x in row['lineage']:
+            if (x == ''):
+                    classification_lineage_index = row['classification'][lineage_counter]
+                    
+                    temp_df.at[criteria_dict[classification_lineage_index], 'LINEAGE NOT ASSIGNED'] += 1
+            lineage_counter += 1
 
+        lineage_counter = 0
         for x in row['lineage']:
             if x in lineage_list:
                 classification_lineage_index = row['classification'][lineage_counter]
@@ -494,7 +501,7 @@ if __name__ == '__main__':
     add_line_break(document)
 
     #read csv file from redcap report
-    linelist_df = pd.read_csv('linelist_EB_06232022.csv')
+    linelist_df = pd.read_csv(linelist_csv)
     linelist_df.index = linelist_df.index + 1
     linelist_df.rename(columns = {'lab_id':'RITM Lab ID', 'uic':'UIC', 'age': 'AGE', 'sex': 'SEX','city_municipality': 'PATIENT ADDRESS','sending_facility':'SENDING FACILITY', 'date_specimen_collection':'DATE OF COLLECTION', 'pango_lineage': 'LINEAGE', 'linelist_region':'LINELIST REGION'}, inplace = True)
 
