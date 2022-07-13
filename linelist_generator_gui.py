@@ -9,7 +9,7 @@ def main():
 
     working_directory = '/mnt/c'
 
-    sg.theme('HotDogStand')
+    sg.theme('DarkGreen5')
 
     layout = [
                 [sg.Text('EB Linelist CSV File Path:'), sg.In(size=(63,1), enable_events=True ,key='-file_path-'), sg.FileBrowse(initial_folder=working_directory)], 
