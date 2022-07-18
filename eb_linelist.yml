@@ -1,0 +1,13 @@
+name: linelist2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3
+  - biopython
+  - openpyxl
+  - pandas
+  - pip
+  - pip:
+    - python-docx 
