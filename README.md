@@ -1,5 +1,4 @@
 # eb_linelist_automation
 
-Instalaltion: 
-needed modules:
-pip install python-docx
+Installation: 
+mamba env create -f eb_linelist.yml 
